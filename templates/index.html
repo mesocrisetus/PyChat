@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+  <title>PyChat - Inicio</title>  
+</head>
+<body>
+  <div class="container">
+    <div class="contacts-panel">
+      <div class="contacts-header">Contactos</div>
+      <div class="contacts-list" id="contactsPanel">
+        <div class="contact" onclick="selectChat('Chat 1')">
+          <div class="avatar"></div>
+          <div class="contact-info">
+            <div class="name">Chat 1</div>
+            <div class="last-message">Last message preview...</div>
+          </div>
+        </div>
+        <div class="contact" onclick="selectChat('Chat 2')">
+          <div class="avatar"></div>
+          <div class="contact-info">
+            <div class="name">Chat 2</div>
+            <div class="last-message">Last message preview...</div>
+          </div>
+        </div>
+        <div class="contact" onclick="selectChat('Chat 3')">
+          <div class="avatar"></div>
+          <div class="contact-info">
+            <div class="name">Chat 3</div>
+            <div class="last-message">Last message preview...</div>
+          </div>
+        </div>
+        <div class="contact" onclick="selectChat('Chat 4')">
+          <div class="avatar"></div>
+          <div class="contact-info">
+            <div class="name">Chat 4</div>
+            <div class="last-message">Last message preview...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-container">
+      <div class="chat-header" id="chatHeader">
+        PyChat
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="message received">
+          <div class="bubble">Hello! How can I help you today?</div>
+        </div>
+        <div class="message sent">
+          <div class="bubble">Hi! I need some assistance.</div>
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const chatInput = document.getElementById('chatInput');
+      const chatMessages = document.getElementById('chatMessages');
+
+      if (chatInput.value.trim() !== '') {
+        const message = document.createElement('div');
+        message.className = 'message sent';
+        message.innerHTML = `<div class="bubble">${chatInput.value}</div>`;
+        chatMessages.appendChild(message);
+
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        chatInput.value = '';
+      }
+    }
+
+    function selectChat(chatName) {
+      const chatHeader = document.getElementById('chatHeader');
+      const contacts = document.querySelectorAll('.contact');
+
+      chatHeader.textContent = chatName;
+
+      contacts.forEach(contact => contact.classList.remove('active'));
+      Array.from(contacts).find(contact => contact.textContent.includes(chatName)).classList.add('active');
+
+      const chatMessages = document.getElementById('chatMessages');
+      chatMessages.innerHTML = `<div class="message received">
+        <div class="bubble">Welcome to ${chatName}!</div>
+      </div>`;
+    }
+  </script>
+</body>
+</html>
