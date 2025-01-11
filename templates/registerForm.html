@@ -9,11 +9,12 @@
 <body>
   <div class="login-container">
     <div class="login-image"></div>
-    <div id="loginForm" class="login-header">Bienvenido a PyChat</div>
+    <div id="loginForm" class="login-header">Formulario de registro</div>
     <form id="loginForm" class="login-form" method="post">
-      <input type="text" name="email" placeholder="Usuario" required>
+      <input type="text" name="email" placeholder="email" required>
       <input type="password" name="password"  placeholder="Contraseña" required>
-      <button type="submit" formaction="/loginIn">Ingresar</button>
+      <input type="password" name="password2"  placeholder="Repetir la contraseña" required>
+      <button type="submit" formaction="/register">Registrarse</button>
     </form>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -25,12 +26,8 @@
       {% endif %}
     {% endwith %}
     <div class="forgot-password">
-      <a href="#">¿Olvidaste tu contraseña?</a>
+      <a href="/">¿Ya tienes una cuenta?</a>
     </div>
-    <hr>
-    <a href="/registerForm" class="registerButton">
-      Registrarse      
-    </a>
     
 
 

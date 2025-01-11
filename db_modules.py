@@ -11,7 +11,8 @@ def register(email,password):
         # Guarda los cambios
         connection.commit()
         cursor.close()
-        print("Usuario creado correctamente")
+        return True
+    
     except sqlite3.Error as e:
         print("Operation Error:",e)
     
@@ -19,10 +20,10 @@ def register(email,password):
 
 def login(email,password):
     try:
+        cursor = connection.cursor()
         sql = "SELECT email, password FROM users WHERE email=? AND password=?"
         cursor.execute(sql, (email, password))
         result = cursor.fetchall()
-        print(result)
         return result
     
 
@@ -31,4 +32,3 @@ def login(email,password):
 
     connection.commit()
     cursor.close()
-

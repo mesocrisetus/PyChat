@@ -30,6 +30,35 @@ def loginIn():
     flash(message)
     return render_template("login.html")
 
+#Register
+
+@app.route("/registerForm")
+def registerForm():
+    return render_template("registerForm.html")
+
+
+@app.route("/register",methods=['POST'])
+def register():
+
+    email = request.form['email']
+    password = request.form['password']
+    password2 = request.form['password2']
+
+    if password != password2:
+        message = "Las contraseñas no coinciden."
+        flash(message)
+        return render_template('registerForm.html')
+    
+    else:
+        registerUser = dbModules.register(email,password)
+        if registerUser:
+            message = "El usuario se ha registrado correctamente"
+            flash(message)
+            return render_template('login.html')
+    
+
+
+
 
 
 
