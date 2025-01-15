@@ -184,3 +184,15 @@ body {
 .chat-form button:hover {
     background: #005bb5;
 }
+
+.contact.logout {
+    background: #f8d7da;
+    color: #721c24;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.contact.logout:hover {
+    background: #f5c6cb;
+}

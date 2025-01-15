@@ -9,21 +9,22 @@
 <body>
   <div class="container">
     <div class="contacts-panel">
-      
-
       <div class="contacts-header">Contactos</div>
       <div class="contacts-list" id="contactsPanel">
         {% for user in users %}
           {% if user[0] != userId|int %}
             <div class="contact" onclick="window.location.href='/chat/{{user[0] }}?user2={{ userId[0]}}'">
-              <div class="avatar"></div>
               <div class="contact-info">
                 <div class="name">{{user[1]}}</div>
-                <!-- <div class="last-message">Last message preview...</div> -->
               </div>
             </div>  
           {% endif %}
         {% endfor%}
+      </div>
+      <div class="contact logout" onclick="window.location.href='/logout'">
+        <div class="contact-info">
+          <div class="name">Cerrar sesión</div>
+        </div>
       </div>
     </div>
     <div class="chat-container">
@@ -36,6 +37,7 @@
             <div class="bubble">{{ message[1] }}</div>
         </div>
         {% endfor %}
+      
     </div>
       <div class="chat-input">
         <form class="chat-form" method="post" > 

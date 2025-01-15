@@ -8,6 +8,8 @@ cursor = connection.cursor()
 #Login and register
 
 def userExist(email):
+    connection = sqlite3.connect("database/pychat.db", check_same_thread=False)
+    cursor = connection.cursor()
     sql = "SELECT 1 FROM users WHERE email = '%s' LIMIT 1;"%(email)
     cursor.execute(sql)
     result = cursor.fetchone()
@@ -16,6 +18,8 @@ def userExist(email):
 
 def register(email,password):
     try:
+        connection = sqlite3.connect("database/pychat.db", check_same_thread=False)
+        cursor = connection.cursor()
         sql = "INSERT INTO users (email,password) VALUES ('%s','%s')"%(email,password)
         cursor.execute(sql)
         # Guarda los cambios
@@ -29,6 +33,8 @@ def register(email,password):
 
 def login(email,password):
     try:
+        connection = sqlite3.connect("database/pychat.db", check_same_thread=False)
+        cursor = connection.cursor()
         cursor = connection.cursor()
         sql = "SELECT id, email, password FROM users WHERE email=? AND password=?"
         cursor.execute(sql, (email, password))
@@ -46,6 +52,8 @@ def login(email,password):
 
 def getAllUsers():
     try:
+        connection = sqlite3.connect("database/pychat.db", check_same_thread=False)
+        cursor = connection.cursor()
         sql = "SELECT * FROM users"
         cursor.execute(sql)
         result = cursor.fetchall()
@@ -57,6 +65,8 @@ def getAllUsers():
 
 #chat Exist
 def get_room(user1_id, user2_id):
+    connection = sqlite3.connect("database/pychat.db", check_same_thread=False)
+    cursor = connection.cursor()
     query = """
         SELECT r.id
         FROM room r
@@ -69,6 +79,8 @@ def get_room(user1_id, user2_id):
     return room
 
 def create_room(user1_id, user2_id):
+    connection = sqlite3.connect("database/pychat.db", check_same_thread=False)
+    cursor = connection.cursor()
     query = "INSERT INTO room (idType, time) VALUES (?, ?)"
     cursor.execute(query, (1, '2025-01-15 12:00:00'))  # idType=1 para "private"
     connection.commit()
@@ -83,6 +95,8 @@ def create_room(user1_id, user2_id):
     return room_id
 
 def get_messages(room_id):
+    connection = sqlite3.connect("database/pychat.db", check_same_thread=False)
+    cursor = connection.cursor()
     # Obtener los mensajes de la base de datos para la sala específica
     cursor.execute("SELECT idUser, message, date FROM messages WHERE idRoom = ?", (room_id,))
     messages = cursor.fetchall()
@@ -91,6 +105,8 @@ def get_messages(room_id):
 
 
 def send_message(user_id, room_id, message, date):
+    connection = sqlite3.connect("database/pychat.db", check_same_thread=False)
+    cursor = connection.cursor()
     query = """
         INSERT INTO messages (idUser, idRoom, message, date)
         VALUES (?, ?, ?, ?)

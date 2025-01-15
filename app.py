@@ -99,7 +99,13 @@ def send_message():
     # Redirigir de nuevo a la página de chat con los mensajes actualizados
     return redirect(url)
 
+@app.route('/logout')
+def logout():
+
+    return redirect('/')  # Redirige a la página de inicio de sesión
+
+
 
 
 if __name__ == '__main__':
-    app.run() 
+    app.run(debug=True) 
