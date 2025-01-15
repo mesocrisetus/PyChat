@@ -85,6 +85,9 @@ body {
     width: 70%;
 }
 
+.userInfo{
+    display: none;
+}
 .chat-header {
     padding: 10px;
     background: #0084ff;
@@ -151,5 +154,33 @@ body {
 }
 
 .chat-input button:hover {
+    background: #005bb5;
+}
+
+.chat-form {
+    display: flex;
+    width: 100%; 
+}
+
+.chat-form input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+}
+
+.chat-form button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: #0084ff;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.chat-form button:hover {
     background: #005bb5;
 }

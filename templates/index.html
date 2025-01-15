@@ -9,36 +9,21 @@
 <body>
   <div class="container">
     <div class="contacts-panel">
+      
+
       <div class="contacts-header">Contactos</div>
       <div class="contacts-list" id="contactsPanel">
-        <div class="contact" onclick="selectChat('Chat 1')">
-          <div class="avatar"></div>
-          <div class="contact-info">
-            <div class="name">Chat 1</div>
-            <div class="last-message">Last message preview...</div>
-          </div>
-        </div>
-        <div class="contact" onclick="selectChat('Chat 2')">
-          <div class="avatar"></div>
-          <div class="contact-info">
-            <div class="name">Chat 2</div>
-            <div class="last-message">Last message preview...</div>
-          </div>
-        </div>
-        <div class="contact" onclick="selectChat('Chat 3')">
-          <div class="avatar"></div>
-          <div class="contact-info">
-            <div class="name">Chat 3</div>
-            <div class="last-message">Last message preview...</div>
-          </div>
-        </div>
-        <div class="contact" onclick="selectChat('Chat 4')">
-          <div class="avatar"></div>
-          <div class="contact-info">
-            <div class="name">Chat 4</div>
-            <div class="last-message">Last message preview...</div>
-          </div>
-        </div>
+        {% for user in users %}
+          {% if user[0] != userId|int %}
+            <div class="contact" onclick="window.location.href='/chat/{{user[0] }}?user2={{ userId[0]}}'">
+              <div class="avatar"></div>
+              <div class="contact-info">
+                <div class="name">{{user[1]}}</div>
+                <!-- <div class="last-message">Last message preview...</div> -->
+              </div>
+            </div>  
+          {% endif %}
+        {% endfor%}
       </div>
     </div>
     <div class="chat-container">
@@ -46,50 +31,26 @@
         PyChat
       </div>
       <div class="chat-messages" id="chatMessages">
-        <div class="message received">
-          <div class="bubble">Hello! How can I help you today?</div>
+        {% for message in messages %}
+        <div class="message {% if message[0] == userId|int %}sent{% else %}received{% endif %}">
+            <div class="bubble">{{ message[1] }}</div>
         </div>
-        <div class="message sent">
-          <div class="bubble">Hi! I need some assistance.</div>
-        </div>
-      </div>
+        {% endfor %}
+    </div>
       <div class="chat-input">
-        <input type="text" id="chatInput" placeholder="Type a message...">
-        <button onclick="sendMessage()">Send</button>
+        <form class="chat-form" method="post" > 
+          <input type="hidden" name="current_url" value="{{ request.url }}">
+          <input type="hidden" id="roomId" name="roomId" value="{{ roomId }}">
+          <input type="hidden" id="userId" name="userId" value="{{ userId }}">                          
+          <input type="text" id="chatInput" name="chatInput" placeholder="Type a message...">
+          <button formaction="/sendMessage">Send</button>
+           
+        </form>
       </div>
     </div>
   </div>
 
-  <script>
-    function sendMessage() {
-      const chatInput = document.getElementById('chatInput');
-      const chatMessages = document.getElementById('chatMessages');
+  
 
-      if (chatInput.value.trim() !== '') {
-        const message = document.createElement('div');
-        message.className = 'message sent';
-        message.innerHTML = `<div class="bubble">${chatInput.value}</div>`;
-        chatMessages.appendChild(message);
-
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        chatInput.value = '';
-      }
-    }
-
-    function selectChat(chatName) {
-      const chatHeader = document.getElementById('chatHeader');
-      const contacts = document.querySelectorAll('.contact');
-
-      chatHeader.textContent = chatName;
-
-      contacts.forEach(contact => contact.classList.remove('active'));
-      Array.from(contacts).find(contact => contact.textContent.includes(chatName)).classList.add('active');
-
-      const chatMessages = document.getElementById('chatMessages');
-      chatMessages.innerHTML = `<div class="message received">
-        <div class="bubble">Welcome to ${chatName}!</div>
-      </div>`;
-    }
-  </script>
 </body>
 </html>
