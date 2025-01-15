@@ -49,6 +49,13 @@ def register():
         flash(message)
         return render_template('registerForm.html')
     
+    userExist = dbModules.userExist(email)
+
+    if userExist:
+        message = "El usuario ya se encuentra registrado"
+        flash(message)
+        return render_template('registerForm.html')
+    
     else:
         registerUser = dbModules.register(email,password)
         if registerUser:

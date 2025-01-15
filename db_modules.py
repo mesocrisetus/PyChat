@@ -4,6 +4,15 @@ import sqlite3
 connection = sqlite3.connect("database/pychat.db", check_same_thread=False)
 cursor = connection.cursor()
 
+
+
+def userExist(email):
+    sql = "SELECT 1 FROM users WHERE email = '%s' LIMIT 1;"%(email)
+    cursor.execute(sql)
+    result = cursor.fetchone()
+    return result is not None
+
+
 def register(email,password):
     try:
         sql = "INSERT INTO users (email,password) VALUES ('%s','%s')"%(email,password)
@@ -15,6 +24,8 @@ def register(email,password):
     
     except sqlite3.Error as e:
         print("Operation Error:",e)
+
+
     
 
 
